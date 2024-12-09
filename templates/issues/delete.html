@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Issue{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user == issue.reporter %}
+        <h1>Delete Issue</h1>
+        <p>Are you sure you want to delete:</p>
+        <p>{{ issue.name }}</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete Forever">
+        </form>
+        <a class="btn btn-secondary" href="{% url 'list' %}">Nevermind!</a>
+    {% endif %}
+{% endif %}
+{% endblock content %} 

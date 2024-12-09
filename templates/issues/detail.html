@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{{ issue.title }}{% endblock title %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="pb-4">{{ issue.name}}</h1>
+    <h3>Status: {{ issue.status.name }}</h3>
+    <small>Created by: {{ issue.reporter }} || Assigned to: {{ issue.assignee }}</small>
+    <p class="py-4">{{ issue.description }}</p>
+
+    {% if user.is_authenticated %}
+        {% if user == issue.assignee or user == issue.reporter %}
+            <a href="{% url 'update' issue.id %}" class="btn btn-primary">Edit</a>
+            {% endif %}
+        {% if user == issue.reporter %}
+            <a href="{% url 'delete' issue.id %}" class=" btn btn-danger">Delete</a>
+        {% endif %}
+    {% endif %}
+    </br><small>Created on: {{ issue.created_on }}</small>
+</div>
+{% endblock content %}

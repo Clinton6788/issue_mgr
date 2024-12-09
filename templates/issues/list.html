@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Issues{% endblock title %}
+
+{% block content %}
+<h1>Issues {{ title }}</h1>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center fw-bold">To-Do</h3>
+            {% for i in to_do_list %}
+            <div class="py-2">
+                <a class="text-decoration-none" href="{% url 'detail' i.id %}">{{ i.assignee }} -- {{ i.name }}</a>
+                <!-- <a class="btn btn-secondary" href="#">Edit</a>
+                <a class="btn btn-danger" href="#">Delete</a> -->
+            </div>
+            {% empty %}
+            <p>No current issues To Do</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3 class="text-center fw-bold">In-Progress</h3>
+            {% for i in in_progress_list %}
+            <div class="py-2">
+                <a class="text-decoration-none" href="#">{{ i.assignee }} -- {{ i.name }}</a>
+            </div>
+            {% empty %}
+                <p>No current issues In Progress</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3 class="text-center fw-bold">Completed</h3>
+            {% for i in done_list %}
+                <a href="#">{{ i.assignee }} -- {{ i.name }}</a>
+            {% empty %}
+                <p>No current issues Completed</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- {% for i in to_do_list %}
+
+{% endfor %} -->
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Issues{% endblock title %}
+
+{% block content %}
+<h1>{{ title }} Issues</h1>
+{% if user.is_authenticated %}
+
+    {% if user == issue.reporter %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="action" value="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    {% elif user == issue.assignee %}
+        <h2 class="pb-4">{{ issue.name}}</h2>
+        <small>Created by: {{ issue.reporter }} || Assigned to: {{ issue.assignee }}</small>
+        <p class="py-4">{{ issue.description }}</p>
+        {% for field in form %}
+            {% if field.name != 'status' %}
+                <div class="form-group">
+                    {{ field.label }}
+                    <input class="form-control" type="text" value="{{ field.value }}" disabled />
+                </div>
+            {% else %}
+                <div class="form-group">
+                    {{ field.label }}
+                    {{ field }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endif %}
+
+{% endblock content %}
